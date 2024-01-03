@@ -14,28 +14,30 @@ import jakarta.persistence.Table;
 @Table(name = "tb_products")
 public class Product {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id = UUID.randomUUID().toString();
-	
+
 	private String name;
-	
+
 	private Double price;
-	
-	@Column(columnDefinition="TEXT")
+
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
-	
+	@Column(name = "img_url")
+	private String imgUrl;
+
 	public Product() {
 
 	}
 
-	public Product(String id, String name, Double price, String description) {
+	public Product(String id, String name, Double price, String description, String imgUrl) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
+		this.imgUrl = imgUrl;
 	}
 
 	public String getId() {
@@ -68,6 +70,14 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImgUrl() {
+		return this.imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override

@@ -11,12 +11,12 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Modifying
 	@Query(nativeQuery = true, value = """
-			UPDATE tb_products SET name=:newName, price=:newPrice, description=:newDescription WHERE id=:id
+			UPDATE tb_products SET name=:newName, price=:newPrice, description=:newDescription, img_url=:newImgUrl WHERE id=:id
 			""")
-	void update(String id, String newName, Double newPrice, String newDescription);
-	
-	@Query(nativeQuery=true, value="""
+	void update(String id, String newName, Double newPrice, String newDescription, String newImgUrl);
+
+	@Query(nativeQuery = true, value = """
 			SELECT tb_products.name FROM tb_products WHERE tb_products.name = ?1
 			""")
-	public ProductRecordDTO findByName(String name); 
+	public ProductRecordDTO findByName(String name);
 }

@@ -18,7 +18,7 @@ public class ProductService {
 
 	@Transactional
 	public void save(ProductRecordDTO body) {
-		Product prod = new Product(body.id(), body.name(), body.price(), body.description());
+		Product prod = new Product(body.id(), body.name(), body.price(), body.description(), body.imgUrl());
 		productRepository.save(prod);
 	}
 
@@ -26,7 +26,7 @@ public class ProductService {
 	public List<ProductRecordDTO> findAll() {
 		List<Product> resul = productRepository.findAll();
 		List<ProductRecordDTO> data = resul.stream()
-				.map(x -> new ProductRecordDTO(x.getId(), x.getName(), x.getPrice(), x.getDescription())).toList();
+				.map(x -> new ProductRecordDTO(x.getId(), x.getName(), x.getPrice(), x.getDescription(), x.getImgUrl())).toList();
 		return data;
 	}
 
@@ -34,7 +34,7 @@ public class ProductService {
 	public ProductRecordDTO findById(String id) {
 		Product resul = productRepository.findById(id).get();
 		ProductRecordDTO data = new ProductRecordDTO(resul.getId(), resul.getName(), resul.getPrice(),
-				resul.getDescription());
+				resul.getDescription(), resul.getImgUrl());
 		return data;
 	}
 	@Transactional
@@ -47,7 +47,8 @@ public class ProductService {
 		String newName = body.name();
 		Double newPrice = body.price();
 		String newDescription = body.description();
-		productRepository.update(id, newName, newPrice, newDescription);
+		String newImgUrl=body.imgUrl();
+		productRepository.update(id, newName, newPrice, newDescription, newImgUrl);
 
 	}
 	@Transactional
