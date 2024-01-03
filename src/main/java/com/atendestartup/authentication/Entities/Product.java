@@ -1,6 +1,7 @@
 package com.atendestartup.authentication.Entities;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,9 +14,10 @@ import jakarta.persistence.Table;
 @Table(name = "tb_products")
 public class Product {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private String id;
+	private String id = UUID.randomUUID().toString();
 	
 	private String name;
 	
@@ -24,6 +26,7 @@ public class Product {
 	@Column(columnDefinition="TEXT")
 	private String description;
 
+	
 	public Product() {
 
 	}

@@ -27,6 +27,10 @@ public class ProductController {
 
 	@PostMapping(value = "/product")
 	public ResponseEntity<String> save(@RequestBody @Valid ProductRecordDTO data) {
+
+		if (productService.findByName(data.name()) != null)
+			return ResponseEntity.status(409).build();
+
 		productService.save(data);
 		return ResponseEntity.ok("'status: 200', Dados salvos com sucesso. ");
 	}
@@ -45,11 +49,13 @@ public class ProductController {
 
 	@PutMapping(value = "/product/{id}/update")
 	public ResponseEntity<String> update(@PathVariable String id, @RequestBody @Valid ProductRecordDTO data) {
+
 		productService.update(id, data);
 		return ResponseEntity.ok("'status: 200', Producto actualizado com sucesso.");
 	}
-	@DeleteMapping(value="/product/{id}/delete")
-	public ResponseEntity<String> delete(@PathVariable String id){
+
+	@DeleteMapping(value = "/product/{id}/delete")
+	public ResponseEntity<String> delete(@PathVariable String id) {
 		productService.delete(id);
 		return ResponseEntity.ok("status: 200, Producto excluido com sucesso.");
 	}

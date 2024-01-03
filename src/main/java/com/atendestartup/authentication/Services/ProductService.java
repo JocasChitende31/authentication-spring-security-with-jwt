@@ -37,7 +37,11 @@ public class ProductService {
 				resul.getDescription());
 		return data;
 	}
-
+	@Transactional
+	public ProductRecordDTO findByName(String name) {
+		ProductRecordDTO resul = productRepository.findByName(name);
+		return resul;
+	}
 	@Transactional
 	public void update(String id, ProductRecordDTO body) {
 		String newName = body.name();
@@ -52,5 +56,6 @@ public class ProductService {
 		productRepository.delete(resul);
 		
 	}
+	
 
 }
