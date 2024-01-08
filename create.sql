@@ -13,3 +13,9 @@ INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone 12 64GB', 2000
 INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone X 64GB',  180000, 'iPhone X é um telefone da apple com bastante qualidade...');
 INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone 8 64GB',  110000, 'iPhone 8 é um telefone da apple com bastante qualidade...');
 INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone 7 64GB',  110000, 'iPhone 7 é um telefone da apple com bastante qualidade...');
+create table tb_products (price float(53), description TEXT, id varchar(255) not null, img_url varchar(255), name varchar(255), primary key (id));
+create table tb_users (id varchar(255) not null, login varchar(255) unique, password varchar(255), role varchar(255) check (role in ('ADMIN','USER')), primary key (id));
+INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone 12 64GB', 200000, 'iPhone 12 é um telefone da apple com bastante qualidade...');
+INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone X 64GB',  180000, 'iPhone X é um telefone da apple com bastante qualidade...');
+INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone 8 64GB',  110000, 'iPhone 8 é um telefone da apple com bastante qualidade...');
+INSERT INTO TB_PRODUCTS (name, price, description) values('iPhone 7 64GB',  110000, 'iPhone 7 é um telefone da apple com bastante qualidade...');

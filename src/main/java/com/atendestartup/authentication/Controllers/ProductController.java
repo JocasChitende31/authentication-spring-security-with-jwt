@@ -28,35 +28,35 @@ public class ProductController {
 	@PostMapping(value = "/product")
 	public ResponseEntity<String> save(@RequestBody @Valid ProductRecordDTO data) {
 
-		if (productService.findByName(data.name()) != null)
-			return ResponseEntity.status(409).build();
-
-		productService.save(data);
-		return ResponseEntity.ok("'status: 200', Dados salvos com sucesso. ");
+		if (this.productService.findByName(data.name()) != null)
+			return ResponseEntity.badRequest().build();
+		else
+			this.productService.save(data);
+			return ResponseEntity.ok("'status: 200', Dados salvos com sucesso. ");
 	}
 
 	@GetMapping(value = "/products")
 	public List<ProductRecordDTO> findAll() {
-		List<ProductRecordDTO> data = productService.findAll();
+		List<ProductRecordDTO> data = this.productService.findAll();
 		return data;
 	}
 
 	@GetMapping(value = "/product/{id}")
 	public ProductRecordDTO findById(@PathVariable String id) {
-		ProductRecordDTO data = productService.findById(id);
+		ProductRecordDTO data = this.productService.findById(id);
 		return data;
 	}
 
 	@PutMapping(value = "/product/{id}/update")
 	public ResponseEntity<String> update(@PathVariable String id, @RequestBody @Valid ProductRecordDTO data) {
 
-		productService.update(id, data);
+		this.productService.update(id, data);
 		return ResponseEntity.ok("'status: 200', Producto actualizado com sucesso.");
 	}
 
 	@DeleteMapping(value = "/product/{id}/delete")
 	public ResponseEntity<String> delete(@PathVariable String id) {
-		productService.delete(id);
+		this.productService.delete(id);
 		return ResponseEntity.ok("status: 200, Producto excluido com sucesso.");
 	}
 }
