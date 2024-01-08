@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.atendestartup.authentication.DTO.AuthenticationDTO;
+import com.atendestartup.authentication.DTO.LoginResponseDTO;
 import com.atendestartup.authentication.DTO.RegisterDTO;
+import com.atendestartup.authentication.Entities.User;
+import com.atendestartup.authentication.InfraSecurity.TokenService;
 import com.atendestartup.authentication.Services.AuthorizationService;
 
 import jakarta.validation.Valid;
@@ -25,12 +28,17 @@ public class AthenticationController {
 	@Autowired
 	private AuthorizationService authorizationService;
 	
+	@Autowired
+	private TokenService tokenService;
+	
 	@PostMapping(value="/login")
-	public ResponseEntity<String> login(@RequestBody @Valid AuthenticationDTO body) {
+	public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO body) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(body.login(), body.password());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 		
-		return ResponseEntity.ok().build();
+		var token = this.tokenService.generateToken( (User)auth.getPrincipal());
+		
+		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
 	@PostMapping(value="/register")
 	public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO body){
