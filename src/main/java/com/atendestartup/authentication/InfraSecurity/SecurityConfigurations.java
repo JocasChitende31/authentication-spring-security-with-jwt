@@ -18,33 +18,34 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurations {
 
-	
-	@Autowired 
+	@Autowired
 	private SecurityFilter securityFilter;
-	
-	
+
 	@Bean
-	 SecurityFilterChain securityFilterChain( HttpSecurity httpSecurity ) throws Exception {
-		return httpSecurity
-				.csrf(csrf->csrf.disable())
-				.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(authorize->authorize
+	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		return httpSecurity.csrf(csrf -> csrf.disable())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+						.requestMatchers(HttpMethod.GET, "/auth/users").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.PUT, "/auth/user/{id}/update").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.DELETE,"/auth/user/{id}/delete").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.POST, "/api/product").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.PUT, "/api/product/{id}/update").hasRole("ADMIN")
-						.anyRequest().authenticated()
-						)
-				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-				.build();
-		
+						.requestMatchers(HttpMethod.DELETE, "/api/product/{id}/delete").hasRole("ADMIN")
+						.anyRequest()
+						.authenticated())
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
+
 	}
-	
+
 	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

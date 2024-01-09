@@ -50,7 +50,7 @@ public class User implements UserDetails {
 		this.role = role;
 	}
 
-	public String getString() {
+	public String getId() {
 		return this.id;
 	}
 

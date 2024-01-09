@@ -19,12 +19,12 @@ public class ProductService {
 	@Transactional
 	public void save(ProductRecordDTO body) {
 		Product prod = new Product(body.id(), body.name(), body.price(), body.description(), body.imgUrl());
-		productRepository.save(prod);
+		this.productRepository.save(prod);
 	}
 
 	@Transactional(readOnly = true)
 	public List<ProductRecordDTO> findAll() {
-		List<Product> resul = productRepository.findAll();
+		List<Product> resul = this.productRepository.findAll();
 		List<ProductRecordDTO> data = resul.stream()
 				.map(x -> new ProductRecordDTO(x.getId(), x.getName(), x.getPrice(), x.getDescription(), x.getImgUrl())).toList();
 		return data;
@@ -32,14 +32,14 @@ public class ProductService {
 
 	@Transactional(readOnly = true)
 	public ProductRecordDTO findById(String id) {
-		Product resul = productRepository.findById(id).get();
+		Product resul = this.productRepository.findById(id).get();
 		ProductRecordDTO data = new ProductRecordDTO(resul.getId(), resul.getName(), resul.getPrice(),
 				resul.getDescription(), resul.getImgUrl());
 		return data;
 	}
 	@Transactional
 	public ProductRecordDTO findByName(String name) {
-		ProductRecordDTO resul = productRepository.findByName(name);
+		ProductRecordDTO resul = this.productRepository.findByName(name);
 		return resul;
 	}
 	@Transactional
@@ -48,13 +48,13 @@ public class ProductService {
 		Double newPrice = body.price();
 		String newDescription = body.description();
 		String newImgUrl=body.imgUrl();
-		productRepository.update(id, newName, newPrice, newDescription, newImgUrl);
+		this.productRepository.update(id, newName, newPrice, newDescription, newImgUrl);
 
 	}
 	@Transactional
 	public void delete(String id) {
-		Product resul = productRepository.findById(id).get();
-		productRepository.delete(resul);
+		Product resul = this.productRepository.findById(id).get();
+		this.productRepository.delete(resul);
 		
 	}
 	

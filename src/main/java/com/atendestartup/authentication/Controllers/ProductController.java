@@ -49,7 +49,6 @@ public class ProductController {
 
 	@PutMapping(value = "/product/{id}/update")
 	public ResponseEntity<String> update(@PathVariable String id, @RequestBody @Valid ProductRecordDTO data) {
-
 		this.productService.update(id, data);
 		return ResponseEntity.ok("'status: 200', Producto actualizado com sucesso.");
 	}
